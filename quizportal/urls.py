@@ -24,6 +24,7 @@ urlpatterns = [
     path('team/', include('team.urls')),
     path('',login_team, name='team_login'),
     path('admin_panel', views.admin_panel, name='admin_panel'),
+    path('qm', views.qm, name='qm'),
 
 
     path('add_quiz/',views.add_quiz, name='add_quiz')

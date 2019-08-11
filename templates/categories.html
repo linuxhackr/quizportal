@@ -1,37 +1,54 @@
+
+
+
 {% extends 'base.html' %}
 {% block content %}
-       <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
-    <hr>
-    <p>please select the category first</p>
-    <select id="category">
+    <div class="row m-0 p-3 justify-content-center" id="categories">
     {% for c in categories %}
-        <option value="{{ c.pk }}">{{ c.name }}</option>
+    <div id="{{ c.pk }}" class="col-12 col-sm-6 col-md-3 col-lg-2" style="height: 100px">
+        <h4>{{ c.name }}</h4>
+    </div>
     {% endfor %}
-    </select>
-    <button id="submit_category_btn">Submit</button>
-
-
+    </div>
+    <div class="row justify-content-center">
+    <button id="next" class="btn btn-success">Next</button>
+    </div>
 {% endblock %}
 
 {% block script %}
     {{ block.super }}
+
     <script>
-    $("#submit_category_btn").on('click', function () {
-       category_pk = $("#category").val();
-       $.ajax({
-           url:'{% url "set_category" %}',
-           type:'post',
-           data:{
-               'category_pk':category_pk,
-               'csrfmiddlewaretoken':'{{ csrf_token }}',
-           },
-           dataType:'json',
-           success:function (data) {
-               if(data['msg'] === 'success'){
-                   location.reload();
-               }
-           }
-       })
+    let category_pk = null;
+    $("#categories div").on('click', function (e) {
+       category_pk = this.id;
+       $("#categories div").removeClass("shadow");
+       $(this).addClass("shadow");
+       $("#next").fadeOut(100);
+       $("#next").fadeIn(300);
     });
+    </script>
+    <script>
+        $("#next").on('click', function () {
+            console.log("next");
+            if(category_pk !== null){
+                console.log("ioio");
+            $.ajax({
+                url: '{% url "set_category" %}',
+                type: 'post',
+                data: {
+                    'category_pk': category_pk,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data['msg'] === 'success') {
+                        location.reload();
+                    }
+                }
+            })
+        }
+
+        });
     </script>
 {% endblock script %}

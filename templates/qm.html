@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Quest</title>
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    {% endblock stylesheet %}
+</head>
+<body class="" style="background-color: #f6f6f6">
+{% block header %}
+    <header class="p-2 bg-light border-bottom border-info shadow mb-4">
+        <a class="btn btn-light border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
+        {#    <a class="btn btn-light border btn-sm float-right shadow" href="{% url 'rounds' %}">All Rounds</a>#}
+        <h6 class="font-weight-bold">Novus QUIZMASTER</h6>
+    </header>
+{% endblock header %}
+{% block content %}
+    <div class="row justify-content-center m-0 p-0">
+    <div class="col-6">
+        <h4 class="font-weight-bold">Control Center</h4>
+    <table class="table table-light">
+    <tr>
+        <td>Round 1 [Brain Drain]</td>
+        <td><button class="btn btn-info btn-sm">Start</button></td>
+        <td><button class="btn btn-danger btn-sm">End</button></td>
+        <td><button class="btn btn-success btn-sm">Scores</button></td>
+        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
+    </tr>
+    <tr>
+        <td>Round 2 [MEE]</td>
+        <td><button class="btn btn-info btn-sm">Start</button></td>
+        <td><button class="btn btn-danger btn-sm">End</button></td>
+        <td><button class="btn btn-success btn-sm">Scores</button></td>
+        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
+    </tr>
+    <tr>
+        <td>Round 1 [Buzzer Round]</td>
+        <td><button class="btn btn-info btn-sm">Start</button></td>
+        <td><button class="btn btn-danger btn-sm">End</button></td>
+        <td><button class="btn btn-success btn-sm">Scores</button></td>
+        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
+    </tr>
+    </table>
+    </div>
+    <div class="col-6 border-left" style="height: 650px; overflow: scroll">
+        <h4 class="font-weight-bold">All Teams</h4>
+        <table class="table table-bordered table-info">
+            <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Members</th>
+                <td>Score R1</td>
+                <td>Score R2</td>
+                <td>Score R3</td>
+            </tr>
+            </thead>
+            {% for t in teams %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.participants.count }} Members</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}
+{% block script %}
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+{% endblock script %}
+</body>
+</html>

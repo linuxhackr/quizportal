@@ -29,7 +29,7 @@ def set_category(request):
                 category_pk = request.POST.get('category_pk', None)
                 if category_pk:
                     try:
-                        category = Category.objects.get(pk=category_pk)
+                        category = Category.objects.get(id=category_pk)
                     except Category.DoesNotExist:
                         category = None
                     if category:
@@ -52,7 +52,6 @@ def round(request, round_pk):
                     # check eligible 100%
                     if request.is_ajax():
                         query_questions = round.get_question_set(team)
-
                         questions = []
                         for q in query_questions:
                             options = []
@@ -72,8 +71,10 @@ def round(request, round_pk):
                                 }
                             )
                         return JsonResponse({'questions': questions})
+                    elif round.is_completed:
+                        return redirect('score')
                     else:
-                        return render(request, 'round.html', {'round':round, 'team':team})
+                        return render(request, 'round.html', {'team':team, 'round':round})
         # elif round.round == 2:
             #     if Round.objects.get(round=1).is_completed:
             #         if not round.is_completed:
@@ -114,4 +115,28 @@ def attempt_question(request):
                     attempt.save()
                     print('attempt save')
                     return JsonResponse({'msg':'success'})
+
+
+def set_rank(request, round_pk):
+    if request.user.is_authenticated:
+        try:
+            round = Round.objects.get(pk=round_pk)
+        except Round.DoesNotExist:
+            round = None
+        if round:
+            scores = round.score_set.all()
+            for score in scores:
+                score.set_rank()
+            scoress = []
+            scores = round.score_set.all()
+            for score in scores:
+                scoress.append({
+                    'team_pk':score.team.pk,
+                    'team_name':score.team.name,
+                    'score':score.score,
+                    'rank':score.rank,
+                })
+
+        return JsonResponse({'msg':'success'})
+
 

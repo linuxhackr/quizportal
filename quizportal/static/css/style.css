@@ -2,6 +2,73 @@ body
 {
 	background-color:#363868;
 }
+/*#cont1
+{
+	margin-left:35%;
+}*/
+#prg_cont
+{
+	margin-top:70px;
+	text-align: center;
+}
+#prg_cont h3
+{
+	color: white;
+}
+#prg_cont h1
+{
+	color:#e33f5a;
+}
+.leaderboard
+{
+	background-color:white;
+	width:50%;
+}
+.rank_user
+{
+	border-radius:100%;
+	background-color:#e93f5a;
+	height:40px;
+	width:50px;
+	padding:10px 10px 10px 10px;
+	text-align:center;
+}
+.rank_user1
+{
+	border-radius:100%;
+	background-color:#04d06d;
+	height:40px;
+	width:50px;
+	padding:10px 10px 10px 10px;
+	text-align:center;
+}
+#prg_cont  button
+{
+	background-color: #fabc07;
+	width:200px;
+
+}
+#prg_cont1
+{
+	margin-top:70px;
+	text-align: center;
+}
+#prg_cont1 h3
+{
+	color: white;
+}
+#prg_cont1 h1
+{
+	color:#fabc07;
+
+
+}
+#prg_cont1  button
+{
+	background-color: #fabc07;
+	width:200px;
+
+}
 #cont
 {
 	margin:100px 20px 20px 20px;
@@ -15,8 +82,105 @@ body
 	border-top-left-radius:10px;
 	border-top-right-radius:10px;
 	position:relative;
-	padding-bottom:20px;
 
+}
+#col4
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	text-align:center;
+	font-weight:bold;
+
+}
+#col0
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	text-align:center;
+	font-weight:bold;
+
+}
+#other
+{
+	display:none;
+}
+#col1
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	text-align:center;
+	font-weight:bold;
+
+}
+#col2
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	text-align:center;
+	font-weight:bold;
+}
+#col3
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	text-align:center;
+	font-weight:bold;
+
+
+}
+.text2,.text3
+{
+	display: none;
+}
+
+/*#col:hover
+{
+	transform:scale(1.1);
+}
+#col:hover #text
+{
+	background-color:green;
+}*/
+.shapec
+{
+	height:100px;
+	width:100px;
+	border:1px solid;
+	border-radius:100%;
+	background-color:white;
+	margin:20px 20px 20px 20px;
+}
+.btns
+{
+	width:100%;
+	background-color:white;
+	position: absolute;
+	left:0%;
+	top:100%;
+}
+.btns .btn
+{
+width:100%;
+color:black;
+}
+#next
+{
+	display:none;
 }
 .shape
 {
@@ -26,6 +190,7 @@ body
 	border-radius:100%;
 	background-color:white;
 	margin-left:70px;
+	margin-bottom:100px;
 
 }
 #col #text
@@ -199,4 +364,5 @@ background: green;
 
 	}
 }
+
 

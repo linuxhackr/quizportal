@@ -5,18 +5,18 @@
     {% for q in questions %}
         <p>quesstion---> {{ q.title }}</p>
     {% endfor %}
-    <div class="m-1 p-1 shadow" id="q-box" style="display: none">
+    <div class="m-1 p-1 shadow" id="q-box">
         <p class="font-weight-bold">Questions for round 1</p>
-        <p class="text-danger">Time left <span id="timer"></span> Seconds</p>
+        <p class="text-danger borde shadow p-1"><span id="timer"></span> Seconds</p>
         <p class="lead" id="question_title">Question</p>
         <table class="table table-bordered">
             <tr>
-                <td><span id="option_1">hfie</span><input name="option" id="option_1_input" type="radio" value=""></td>
-                <td><span id="option_2">hfie</span><input name="option" id="option_2_input" type="radio" value=""></td>
+                <td><span id="option_1"></span><input name="option" id="option_1_input" type="radio" value=""></td>
+                <td><span id="option_2"></span><input name="option" id="option_2_input" type="radio" value=""></td>
             </tr>
             <tr>
-                <td><span id="option_3">hfie</span><input name="option" id="option_3_input" type="radio" value=""></td>
-                <td><span id="option_4">hfie</span><input name="option" id="option_4_input" type="radio" value=""></td>
+                <td><span id="option_3"></span><input name="option" id="option_3_input" type="radio" value=""></td>
+                <td><span id="option_4"></span><input name="option" id="option_4_input" type="radio" value=""></td>
             </tr>
         </table>
     </div>
@@ -102,7 +102,7 @@
                         start_questions();
                         let tiv = setInterval(start_questions.bind(), time_int);
                     } else {
-                        $("#q-box").html("No Question.... Refresh the page or go back");
+                        window.location.href = round_pk+'/score'
                     }
                 }
             });

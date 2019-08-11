@@ -49,5 +49,24 @@
 		</div>
 	</div>
 </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let msg = '{{ msg }}';
+    if(msg==="err"){
+
+   swal({
+        title: "Error",
+        text: "Incorrect Credentials!",
+        type: "error",
+        showCancelButton: true,
+        confirmButtonClass: 'btn-alert',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: "No, cancel plx!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+        });
+    }
+
+</script>
 </body>
 </html>

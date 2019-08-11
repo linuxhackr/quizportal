@@ -8,9 +8,11 @@ class Score(models.Model):
     round = models.ForeignKey(Round, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     rank = models.IntegerField(default=0)
+    updated = models.DateTimeField(auto_now=True)
 
     def set_rank(self):
-        self.rank = [i + 1 for i, x in enumerate(self.round.score_set.all().order_by('score')) if x == self]
+        # todo see this updated and rank also
+        self.rank = [i + 1 for i, x in enumerate(self.round.score_set.all().order_by('score', 'updated')) if x == self]
         self.save()
 
     def update_score(self, question_pk, option_pk):
@@ -19,10 +21,11 @@ class Score(models.Model):
         except Question.DoesNotExist:
             question = None
         try:
-            option = Option(pk = option_pk)
+            option = Option.objects.get(pk = option_pk)
         except Option.DoesNotExist:
             option = None
         if question and option:
+            print("-->q", question, option)
             if self.round.round is 1:
                 category = self.team.category
                 # in case of round 1
@@ -33,9 +36,14 @@ class Score(models.Model):
                         except Attempt.DoesNotExist:
                             attempt = None
                         if attempt is None:
+                            print("option", option)
                             if option.is_right:
-                                self.score += 1  # updating the score
-                                self.save()
+                                self.score += 20  # updating the score
+                            else:
+                                self.score -= 5
+                                print('wrong answer')
+                            print(self.score)
+                            self.save()
                             attempt = Attempt(team=self.team, question=question, is_submitted=True)
                             attempt.save()
                         return True

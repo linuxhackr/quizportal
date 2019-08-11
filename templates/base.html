@@ -6,11 +6,19 @@
     <title>The Quest</title>
     {% block stylesheet %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
     {% endblock stylesheet %}
 </head>
-<body>
+<body class="" style="background-color: #f6f6f6">
+{% block header %}
+    <header class="p-2 bg-light border-bottom border-info shadow mb-4">
+    <a class="btn btn-light border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
+    <a class="btn btn-light border btn-sm float-right shadow" href="{% url 'rounds' %}">All Rounds</a>
+<h3 class="text-info font-weight-bold">Novus</h3>
+    </header>
+{% endblock header %}
 {% block content %}
 {% endblock content %}
 {% block script %}

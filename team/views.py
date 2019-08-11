@@ -31,7 +31,8 @@ def login_team(request):
                     'team_name': team.name,
                 }
                 return redirect('/quiz/rounds')
-            return render(request, 'login.html', {'msg': 'Invalid TeamName, Invalid Password'})
+            else:
+                return render(request, 'login.html', {'msg':'err'})
 
     return render(request, 'login.html')
 

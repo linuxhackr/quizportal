@@ -2,16 +2,28 @@
 {% block content %}
     <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
     <hr>
+    You have been selected <span class="text-info">{{ team.category }}</span>
+    <hr>
+    <div class="row p-2 m-0 justify-content-center">
     {% for r in rounds %}
-        {% if r.is_live and not r.is_completed %}
-        <a class="d-block" href="{% url 'round' r.pk %}">
-            Round {{ r.round }} - [{% if r.is_live %} live now {% endif %}] [{% if r.is_completed %} completed {% endif %}]
-        </a>
-            {% else %}
-            <a class="d-block">
-            Round {{ r.round }} - [{% if r.is_live %} live now {% endif %}] [{% if r.is_completed %} completed {% endif %}]
-        </a>
-        {% endif %}
+            <div class="card col-3 p-2 m-2 shadow">
+            <div class="card-header">
+                Round {{ r.round }}
+            </div>
+            <div class="card-body">
+                Brain Drain
+            </div>
+            <div class="card-footer font-weight-bold">
+                {% if r.is_completed %}
+                                        Completed <a href="{% url 'round_score' r.pk %}" class="badge badge-success badge-pill">Check Score</a>
+                    {% elif r.is_live %}
+<a href="{% url 'round' r.pk %}">Go To Quiz <span class="badge badge-danger badge-pill">live</span></a>
+                {% else %}
+                    <a class="text-muted">TBD</a>
+                {% endif %}
+            </div>
+            </div>
     {% endfor %}
+    </div>
 
 {% endblock content %}

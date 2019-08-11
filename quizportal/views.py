@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from quiz.models import Question, Option, Category, Round
+from team.models import Team
 
 def admin_panel(request):
     rounds = Round.objects.all()
@@ -67,3 +68,10 @@ def add_quiz(request):
                     option4.save()
 
                 return JsonResponse({'msg':'success, we have' + str(Question.objects.count()) + " questions ... Add more"})
+
+
+def qm(request):
+    if request.user.is_superuser:
+        rounds = Round.objects.all()
+        teams = Team.objects.all()
+        return render(request, 'qm.html', {'rounds':rounds, 'teams':teams})
