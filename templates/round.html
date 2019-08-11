@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
+    <hr>
+    {% for q in questions %}
+        <p>quesstion---> {{ q.title }}</p>
+    {% endfor %}
+    <div class="m-1 p-1 shadow" id="q-box" style="display: none">
+        <p class="font-weight-bold">Questions for round 1</p>
+        <p class="text-danger">Time left <span id="timer"></span> Seconds</p>
+        <p class="lead" id="question_title">Question</p>
+        <table class="table table-bordered">
+            <tr>
+                <td><span id="option_1">hfie</span><input name="option" id="option_1_input" type="radio" value=""></td>
+                <td><span id="option_2">hfie</span><input name="option" id="option_2_input" type="radio" value=""></td>
+            </tr>
+            <tr>
+                <td><span id="option_3">hfie</span><input name="option" id="option_3_input" type="radio" value=""></td>
+                <td><span id="option_4">hfie</span><input name="option" id="option_4_input" type="radio" value=""></td>
+            </tr>
+        </table>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {{ block.super }}
+    <script>
+
+        const round_pk = "{{ round.pk }}";
+
+        // save response | update score | update rank
+        //
+        let num_ques = 0;
+        const time_int = 5000;
+        $(document).ready(function () {
+            $.ajax({
+                url: '{% url "round" round.pk %}',
+                type: 'post',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    num_ques = data['questions'].length;
+                    if (num_ques > 0) {
+
+                        function start_questions() {
+                            function q_timer() {
+
+                                $("#timer").html(x);
+                                x = x - 1;
+
+                                if (x === 0) {
+                                    option_pk = $('input:radio[name=option]:checked').val();
+                                    console.log("--->" + option_pk);
+
+                                    question_pk = data['questions'][i].pk;
+                                    console.log(question_pk + "--> " + i);
+                                    clearInterval(timerr);
+                                    submit_response(question_pk, option_pk);
+                                    console.log('timer stopped');
+                                    console.log(i + " " + num_ques);
+                                    i = i + 1;
+                                    if (i === num_ques) {
+                                        clearInterval(tiv);
+                                        $("#q-box").html("Please wait... we are fetching the scoreboard");
+                                        setTimeout(function () {
+                                            window.location = round_pk + "/score";
+                                        }, 5000);
+
+
+                                    }
+                                }
+                            }
+
+                            let x = Math.floor(time_int / 1000);
+                            q_timer();
+                            timerr = setInterval(q_timer, 1000);
+
+                            attempt_question(data['questions'][i].pk);
+
+
+                            $('input:radio[name=option]:checked').prop('checked', false);
+                            $("#question_title").html(data['questions'][i].title);
+                            $("#option_1").html(data['questions'][i]['options'][0].title);
+                            $("#option_2").html(data['questions'][i]['options'][1].title);
+                            $("#option_3").html(data['questions'][i]['options'][2].title);
+                            $("#option_4").html(data['questions'][i]['options'][3].title);
+                            $("#option_1_input").attr('value', data['questions'][i]['options'][0].pk);
+                            $("#option_2_input").attr('value', data['questions'][i]['options'][1].pk);
+                            $("#option_3_input").attr('value', data['questions'][i]['options'][2].pk);
+                            $("#option_4_input").attr('value', data['questions'][i]['options'][3].pk);
+
+
+                            {#submit_response(data['questions']);#}
+
+
+                        }
+
+                        let i = 0;
+                        start_questions();
+                        let tiv = setInterval(start_questions.bind(), time_int);
+                    } else {
+                        $("#q-box").html("No Question.... Refresh the page or go back");
+                    }
+                }
+            });
+
+        });
+
+        function submit_response(question_pk, option_pk) {
+            $.ajax({
+                url: '{% url "update_score" %}',
+                type: 'post',
+                data: {
+                    'question_pk': question_pk,
+                    'option_pk': option_pk,
+                    'round_pk': round_pk,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data['msg']);
+                }
+            })
+        }
+        function attempt_question(question_pk) {
+            $.ajax({
+                url: '{% url "attempt_question" %}',
+                type: 'post',
+                data: {
+                    'question_pk': question_pk,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data['msg']);
+                }
+            })
+        }
+    </script>
+{% endblock script %}

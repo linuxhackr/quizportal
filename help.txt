@@ -1,0 +1,70 @@
+ADMIN CONSOLE
+-------------------
+-add question
+-add team
+-calculate rank for round 1
+-show rank for round 1
+-fill up for round 2
+-calculate rank for round 2
+-display rank for round 2
+-fill up for round 3
+-final winner
+
+QUIZMASTER CONSOLE
+----------------------
+-START ROUND 1
+-STOP ROUND 1
+
+-calculate rank for round 1
+-show rank for round 1
+-fill up for round 2
+
+-START ROUND 2
+-STOP ROUND 2
+
+-calculate rank for round 2
+-display rank for round 2
+-fill up for round 3
+
+-START ROUND 3
+-STOP ROUND 3
+
+-final winner
+
+USER CONSOLE
+-----------------
+LOGIN
+IF IF ROUND 1 START
+    DISPLAY ROUND1 UNLOCKED
+    START QUIZ
+        DISPLAY QUESTION
+        TAKE RESPONSE
+        UPDATE SCORE
+        REPEAT
+    END QUIZ
+    ----- WAITS FOR THE RANK
+    DISPLAYS RANK
+    IF QUALIFIED FOR ROUND 2
+        UNLOCK ROUND 2
+            PLAY VIDEO AND DISPLAY OPTIONS [ 1 MIN ]
+            TAKE RESPONSE
+            UPDATE SCORE
+            REPEAT
+        END OF ROUND 2
+        WAITING FOR THE RESULT
+        DISPLAY RESULT
+
+        IF QUALIFIED FOR THE ROUND 3
+            UNLOCK ROUND 3
+                DISPLAY BUZZER
+                QUIZMASTER TELL WILL TELL THE QUESTION
+                IF YOU KNOW THE ANSWER
+                    CLICK ON BUZZER
+                    YOU WILL SEE THE QUESTION AND OPTIONS
+                    REST USERS CANT ABLE TO ANSWER
+                REPEAT
+            END OF ROUND 3
+            WAITING FOR THE RESULT
+            DISPLAY THE WINNER
+
+    

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if score %}
+    <div class="list-group m-1 p-1">
+    {% if my_score %}
+    <div class="list-group-item bg-info text-white">
+        {{ my_score.score }} scored by me
+    </div>
+        {% endif %}
+    {% for s in score %}
+        <div class="list-group-item">
+        {{ s.score }} by {{ s.team.name }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endblock content %}

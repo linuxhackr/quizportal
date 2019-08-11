@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
+    <hr>
+    {% for r in rounds %}
+        {% if r.is_live and not r.is_completed %}
+        <a class="d-block" href="{% url 'round' r.pk %}">
+            Round {{ r.round }} - [{% if r.is_live %} live now {% endif %}] [{% if r.is_completed %} completed {% endif %}]
+        </a>
+            {% else %}
+            <a class="d-block">
+            Round {{ r.round }} - [{% if r.is_live %} live now {% endif %}] [{% if r.is_completed %} completed {% endif %}]
+        </a>
+        {% endif %}
+    {% endfor %}
+
+{% endblock content %}

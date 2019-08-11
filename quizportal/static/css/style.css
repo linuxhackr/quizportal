@@ -1,0 +1,202 @@
+body
+{
+	background-color:#363868;
+}
+#cont
+{
+	margin:100px 20px 20px 20px;
+	color:white;
+
+}
+#col
+{
+	background-color: #8766ff;
+	margin:10px 10px 10px 10px;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	position:relative;
+	padding-bottom:20px;
+
+}
+.shape
+{
+	height:100px;
+	width:100px;
+	border:1px solid;
+	border-radius:100%;
+	background-color:white;
+	margin-left:70px;
+
+}
+#col #text
+{
+	position:absolute;
+	background-color: white;
+	margin-top: 15px;
+	padding:10px 10px 10px 10px;
+	width:100%;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+	left:0%;
+	top:130px;
+	text-align: center;
+
+
+}
+#col a
+{
+	color:black;
+	font-weight:=20;
+
+
+}
+#col h5
+{
+	text-align:center;
+	font-weight:bold;
+
+}
+.cong h1
+{
+	color:#fb9f19;
+	text-align:center;
+
+}
+.cong h4
+{
+	color:white;
+	text-align: center;
+
+}
+.cong #p1
+{
+	color:#fb9f19;
+	text-align: center;
+	font-size:200px;
+	font-weight:20;
+}
+.cong #p2
+{
+	color:white;
+	text-align: center;
+	font-size:100px;
+	font-weight:20;
+}
+#nav
+{
+	background-color: #8766ff;
+	position: fixed;
+	width:100%;
+	z-index:999;
+
+
+}
+#nav a
+{
+	color: white;
+}
+#ins
+{
+	background: #8766ff;
+	border-left: 1px solid purple;
+ border-bottom-left-radius: 25px;
+  border-top-left-radius: 25px;
+	padding: 70px 70px 70px 70px;
+}
+#login
+{
+	background:white;
+	border-left: 1px solid purple;
+	border-bottom-right-radius: 25px;
+  border-top-right-radius:25px;
+	padding: 0px 0px 0px 0px;
+}
+#log-body
+{
+
+	margin-top: 60px;
+	color: white;
+}
+#log-body label
+{
+	color: black;
+}
+#log-body form
+{
+	margin: 82px 82px 82px 82px;
+}
+#log-body #submit
+{
+background: green;
+}
+#ins #h1
+{
+	font-size:60px;
+	text-align: center;
+}
+#ins #h2
+{
+	font-size:35px;
+	text-align: center;
+}
+#log-body ol li
+{
+	font-size: 30px;
+}
+
+#que-body
+{
+	background-color:#ffff;
+	padding:20px 20px 20px 20px;
+
+}
+.head
+{
+	background-color:#f1f1f1;
+	padding-top:1px;
+	padding-bottom:1px;
+	padding-left:5px;
+	width:100%;
+	margin-top:30px;
+	border-top-left-radius:10px;
+	border-top-right-radius: 10px;
+
+}
+#que
+{
+	border: 2px solid black;
+}
+.head h3
+{
+	font-weight:bold;
+}
+
+	@media only screen and (max-width: 600px)
+	{
+			.cong #p1
+{
+	color:#fb9f19;
+	text-align: center;
+	font-size:60px;
+	font-weight:20;
+}
+.cong #p2
+{
+	color:#ffff;
+	text-align: center;
+	font-size:20px;
+	font-weight:20;
+}
+
+#col{
+	margin-bottom:80px;
+	padding-top:5px;
+}
+#col #shape
+{
+	margin-left:10px;
+
+
+	}
+}
+

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+       <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
+    <hr>
+    <p>please select the category first</p>
+    <select id="category">
+    {% for c in categories %}
+        <option value="{{ c.pk }}">{{ c.name }}</option>
+    {% endfor %}
+    </select>
+    <button id="submit_category_btn">Submit</button>
+
+
+{% endblock %}
+
+{% block script %}
+    {{ block.super }}
+    <script>
+    $("#submit_category_btn").on('click', function () {
+       category_pk = $("#category").val();
+       $.ajax({
+           url:'{% url "set_category" %}',
+           type:'post',
+           data:{
+               'category_pk':category_pk,
+               'csrfmiddlewaretoken':'{{ csrf_token }}',
+           },
+           dataType:'json',
+           success:function (data) {
+               if(data['msg'] === 'success'){
+                   location.reload();
+               }
+           }
+       })
+    });
+    </script>
+{% endblock script %}

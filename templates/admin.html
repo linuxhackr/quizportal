@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Admin Panel [THE QUEST]</title>
+<style>
+    *{
+        font-family: "Share Tech", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css?family=Share+Tech&display=swap" rel="stylesheet">
+
+
+</head>
+<body style="background-color: #54366d"> <p class="display-4 text-white border-bottom font-weight-bold">Add Dummy Quiz</p>
+<div class="row p-1 m-0 justify-content-center">
+
+    <div class="col-12 col-md-9 border shadow-lg bg-light my-5 p-2">
+        <select id="category" required>
+            {%  for c in categories %}
+                <option value="{{ c.pk }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+        <select id="round" required>
+            {%  for r in rounds %}
+                <option value="{{ r.pk }}">Round {{ r.round }}</option>
+            {% endfor %}
+        </select>
+    <br>
+        <label>Question</label>
+        <textarea id="question_text" class="form-control rounded-0"></textarea>
+        <hr>
+        <label>Option 1</label>
+        <div class="row m-0 p-2 border rounded">
+            <div class="col-9 p-0 m-0">
+        <input id="option_1" type="text" class="form-control d-inline-block rounded-0">
+            </div>
+            <div class="col-3 p-0 m-0">
+                <input id="option_1_right" value="1" name="is_right" type="radio" class="form-control d-inline-block">
+            </div>
+        </div>
+
+        <label>Option 2</label>
+        <div class="row m-0 p-2 border rounded">
+            <div class="col-9 p-0 m-0">
+        <input id="option_2" type="text" class="form-control d-inline-block rounded-0">
+            </div>
+            <div class="col-3 p-0 m-0">
+                <input id="option_2_right" value="2" name="is_right" type="radio" class="form-control d-inline-block">
+            </div>
+        </div>
+        <label>Option 3</label>
+        <div class="row m-0 p-2 border rounded">
+            <div class="col-9 p-0 m-0">
+        <input id="option_3" type="text" class="form-control d-inline-block rounded-0">
+            </div>
+            <div class="col-3 p-0 m-0">
+                <input id="option_3_right" value="3" name="is_right" type="radio" class="form-control d-inline-block">
+            </div>
+        </div>
+        <label>Option 4</label>
+        <div class="row m-0 p-2 border rounded">
+            <div class="col-9 p-0 m-0">
+        <input id="option_4" type="text" class="form-control d-inline-block rounded-0">
+            </div>
+            <div class="col-3 p-0 m-0">
+                <input id="option_4_right" value="4" name="is_right" type="radio" class="form-control d-inline-block">
+            </div>
+        </div>
+        <button class="btn btn-info m-1 rounded-0" id="add_quiz_btn"> Add</button>
+        <p id="response" class="text-success">Upload please</p>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+$("#add_quiz_btn").on('click', function () {
+    question_text = $("#question_text").val();
+    option_1 = $("#option_1").val();
+    option_2 = $("#option_2").val();
+    option_3 = $("#option_3").val();
+    option_4 = $("#option_4").val();
+    category = $("#category").val();
+    round = $("#round").val();
+    right_option = $('input:radio[name=is_right]:checked').val();
+    error = false;
+    if(right_option === undefined){
+        alert("please choose one option");
+        error = true;
+    }
+    if(question_text.trim() === "" ){
+        alert("please enter question");
+        error = true;
+    }
+    if(option_1.trim()==="" || option_2.trim() === "" || option_3.trim() === "" || option_4.trim() === ""){
+        alert("please fill the options");
+        error = true;
+    }
+    if(!error){
+        $.ajax({
+            'url':'{% url "add_quiz" %}',
+            type:'post',
+            data:{
+                'question_text':question_text,
+                'option_1':option_1,
+                'option_2':option_2,
+                'option_3':option_3,
+                'option_4':option_4,
+                'right_option':right_option,
+                'category':category,
+                'round':round,
+                'csrfmiddlewaretoken':'{{ csrf_token }}',
+            },
+            dataType:'json',
+            success:function (data) {
+                $("#response").html(data['msg']);
+                $("#question_text").val("");
+                $("#option_1").val("");
+                $("#option_2").val("");
+                $("#option_3").val("");
+                $("#option_4").val("");
+                $('input:radio[name=is_right]:checked').prop('checked', false);
+            }
+        })
+    }
+
+
+
+});
+</script>
+</body>
+</html>
