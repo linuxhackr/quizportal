@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Option, Attempt, Round
+from .models import Question, Option, Attempt, Round, Phase ,BzrAttempt
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ['title', 'type', 'round', 'category', 'options']
@@ -12,3 +12,5 @@ admin.site.register(Question, QuestionAdmin)
 admin.site.register(Option)
 admin.site.register(Attempt)
 admin.site.register(Round)
+admin.site.register(Phase)
+admin.site.register(BzrAttempt)

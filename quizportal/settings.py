@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'team.apps.TeamConfig',
     'score.apps.ScoreConfig',
     'quiz.apps.QuizConfig',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +127,22 @@ STATICFILES_DIRS = [
 os.path.join(BASE_DIR, 'quizportal/static')
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
+
+"""
+
+validate for round2
+load video on question change
+live score on quizmaster
+
+eligibility for round 3
+
+
+
+"""

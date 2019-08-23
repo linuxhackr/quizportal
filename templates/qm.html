@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <title>The Quest</title>
     {% block stylesheet %}
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+        <style>
+        *{
+            font-family: "Lexend Deca";
+        }
+        </style>
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
@@ -13,7 +19,7 @@
 </head>
 <body class="" style="background-color: #f6f6f6">
 {% block header %}
-    <header class="p-2 bg-light border-bottom border-info shadow mb-4">
+    <header class="p-2 bg-light border-bottom border-info mb-4">
         <a class="btn btn-light border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
         {#    <a class="btn btn-light border btn-sm float-right shadow" href="{% url 'rounds' %}">All Rounds</a>#}
         <h6 class="font-weight-bold">Novus QUIZMASTER</h6>
@@ -21,33 +27,44 @@
 {% endblock header %}
 {% block content %}
     <div class="row justify-content-center m-0 p-0">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
         <h4 class="font-weight-bold">Control Center</h4>
-    <table class="table table-light">
+    <h6 id="timer" class="text-danger"></h6>
+        <div id="c-box">
+            <table class="table table-bordered">
+        {% for r in rounds %}
     <tr>
-        <td>Round 1 [Brain Drain]</td>
-        <td><button class="btn btn-info btn-sm">Start</button></td>
-        <td><button class="btn btn-danger btn-sm">End</button></td>
-        <td><button class="btn btn-success btn-sm">Scores</button></td>
-        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
+        <td>Round {{ r.round }}</td>
+        <td><button value="{{ r.pk }}" class="round_start btn btn-info btn-sm {% if r.is_completed or r.is_live %} disabled {% endif %}">{% if r.is_completed and not r.is_live %}Completed{% elif r.is_live %}Started{% else %}Start{% endif %}</button></td>
+        <td><button value="{{ r.pk }}" class="round_stop btn btn-danger btn-sm">{% if r.is_live %}End{% endif %}</button></td>
+{#        <td><button value="{{ r.pk }}" class="round_score btn btn-success btn-sm">{% if r.is_live or r.is_completed %}Scores{% endif %}</button></td>#}
+        <td><button value="{{ r.pk }}" class="round_eligible_teams btn btn-info btn-sm">Eligible Teams</button></td>
     </tr>
-    <tr>
-        <td>Round 2 [MEE]</td>
-        <td><button class="btn btn-info btn-sm">Start</button></td>
-        <td><button class="btn btn-danger btn-sm">End</button></td>
-        <td><button class="btn btn-success btn-sm">Scores</button></td>
-        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
-    </tr>
-    <tr>
-        <td>Round 1 [Buzzer Round]</td>
-        <td><button class="btn btn-info btn-sm">Start</button></td>
-        <td><button class="btn btn-danger btn-sm">End</button></td>
-        <td><button class="btn btn-success btn-sm">Scores</button></td>
-        <td><button class="btn btn-info btn-sm">Eligible Teams</button></td>
-    </tr>
+        {% endfor %}
     </table>
+
+
+
+    <h6 id="status" class="text-danger font-weight-bold m-2 p-2 rounded border">
+
+    </h6>
+
     </div>
-    <div class="col-6 border-left" style="height: 650px; overflow: scroll">
+    <h4>In case of round 3</h4>
+    <div class="m-2 p-0 py-2 border rounded">
+        <div class=" m-1 " style="min-height: 150px">
+            <button id="start_p1btn" class="btn btn-info my-2">Start Phase 1</button>
+            <button id="stop_p1btn" class="btn btn-danger float-right my-2">Stop Phase 1</button>
+            <button id="provide_q_btn" class="btn btn-primary my-2 btn-block badge-pill my-2">Provide Question</button>
+            <p>Status:<span class="text-primary" id="msg"> </span></p>
+        </div>
+        <div class=" my-3 p-1 border-top" style="min-height: 150px">
+            <button id="start_p2btn" class="btn btn-info">Start Phase 2</button>
+            <button id="stop_p2btn" class="btn btn-danger float-right">Stop Phase 2</button>
+        </div>
+    </div>
+    </div>
+    <div class="col-12 col-md-6 d-none border-left" style="height: 650px; overflow: scroll">
         <h4 class="font-weight-bold">All Teams</h4>
         <table class="table table-bordered table-info">
             <thead>
@@ -123,63 +140,262 @@
                     <td>--</td>
                     <td>--</td>
                 </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.participants.count }} Members</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
             {% endfor %}
         </table>
     </div>
+    </div>
+
+{#    <button type="button" id="" data-toggle="modal" data-target="#scoreboard">s</button>#}
+
+    <div class="modal fade" id="scoreboard" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        k
+    </div>
+    </div>
+
 {% endblock content %}
 {% block script %}
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/jquery.js' %}"></script>
+
+    <script>
+
+
+    $("#c-box").on('click','.round_start', function () {
+        let round_pk = this.value;
+        btn = this;
+        $.ajax({
+            'url':"{% url 'start_round' %}",
+            type:'post',
+            data:{
+                'round_pk':round_pk,
+                'csrfmiddlewaretoken':'{{ csrf_token }}',
+            },
+            dataType:'json',
+            success:function (data) {
+                $("#c-box").load(location.href+ " #c-box");
+                console.log(data['msg']);
+                //for round 1
+                if(data['msg']==='Round 1 has been started')
+                {
+                    $(btn).html("Started");
+                    x = 5;
+                    $("#timer").html(x + " mins left");
+                    function update_timer() {
+                            x--;
+                            $("#timer").html(x + " mins left in ROUND 1");
+                            if(x===0){
+                                clearInterval(tid);
+                                $("#timer").html("END OF ROUND 1");
+
+                            }
+
+                        }
+tid = setInterval(update_timer, 60000);
+                    setTimeout(function () {
+                        stop_round(round_pk);
+                    }, 60000*5)
+                }
+                $("#status").html(data['msg']);
+            }
+        })
+    });
+
+    function stop_round(round_pk){
+                btn = this;
+        $.ajax({
+            'url':"{% url 'stop_round' %}",
+            type:'post',
+            data:{
+                'round_pk':round_pk,
+                'csrfmiddlewaretoken':'{{ csrf_token }}',
+            },
+            dataType:'json',
+            success:function (data) {
+                console.log(data['msg']);
+                if(data['res']==='success')
+                {
+                    console.log("successfully round stopped");
+                    {#$("#status").html("ROUND STOPPED");#}
+                }
+                $("#status").html(data['msg']);
+                $("#c-box").load(location.href+ " #c-box");
+            }
+        })
+
+    }
+
+    $("#c-box").on('click','.round_stop', function () {
+        let round_pk = this.value;
+        stop_round(round_pk);
+    });
+    </script>
+
+    <script>
+    function reload_control(){
+        $("#c-box").load(location.href+ " #c-box");
+        console.log('reloaded...');
+    }
+    tid2 = setInterval(reload_control, 3000);
+    </script>
+
+    <script>
+    let is_p1_live = "{{ phase1.is_live }}";
+    let is_p2_live = "{{ phase2.is_live }}";
+    if(is_p1_live === "True"){
+        console.log("phase 1 is live");
+        $("#start_p1btn").hide();
+        $("#stop_p1btn").show();
+        $("#provide_q_btn").fadeIn(500);
+    } else {
+        $("#start_p1btn").show();
+        $("#stop_p1btn").hide();
+        $("#provide_q_btn").fadeOut(500);
+    }
+
+    if(is_p2_live === "True"){
+        console.log("phase 2 is live");
+        $("#stop_p2btn").show();
+        $("#provide_q_btn").show();
+        $("#start_p2btn").hide();
+    } else {
+        $("#start_p2btn").show();
+        $("#stop_p2btn").hide();
+        $("#provide_q_btn").hide();
+    }
+
+    $(document).ready(function () {
+       $("#start_p1btn").on('click', function () {
+          $.ajax({
+              'url':"{% url 'set_phase_live' %}",
+              'type':'post',
+              data:{
+                  'phase_pk':"{{ phase1.pk }}",
+                  'csrfmiddlewaretoken':"{{ csrf_token }}",
+
+              },
+              dataType:'json',
+              success:function (data) {
+                  if(data['msg']==='success'){
+                      $("#start_p1btn").hide();
+                      $("#stop_p1btn").show();
+                      $("#provide_q_btn").fadeIn(500);
+                  }
+              }
+
+          })
+       });
+       $("#start_p2btn").on('click', function () {
+          $.ajax({
+              'url':"{% url 'set_phase_live' %}",
+              'type':'post',
+              data:{
+                  'phase_pk':"{{ phase2.pk }}",
+                  'csrfmiddlewaretoken':"{{ csrf_token }}",
+
+              },
+              dataType:'json',
+              success:function (data) {
+                  if(data['msg']==='success'){
+                      $("#start_p2btn").hide();
+                      $("#stop_p2btn").show();
+                  }
+              }
+
+          })
+       });
+       $("#stop_p1btn").on('click', function () {
+          $.ajax({
+              'url':"{% url 'set_phase_unlive' %}",
+              'type':'post',
+              data:{
+                  'phase_pk':"{{ phase1.pk }}",
+                  'csrfmiddlewaretoken':"{{ csrf_token }}",
+
+              },
+              dataType:'json',
+              success:function (data) {
+                  if(data['msg']==='success'){
+                      $("#start_p1btn").hide();
+                      $("#stop_p1btn").hide();
+                      $("#provide_q_btn").fadeOut(500);
+                  }
+              }
+
+          })
+       });
+       $("#stop_p2btn").on('click', function () {
+          $.ajax({
+              'url':"{% url 'set_phase_unlive' %}",
+              'type':'post',
+              data:{
+                  'phase_pk':"{{ phase2.pk }}",
+                  'csrfmiddlewaretoken':"{{ csrf_token }}",
+
+              },
+              dataType:'json',
+              success:function (data) {
+                  if(data['msg']==='success'){
+                      $("#start_p2btn").hide();
+                      $("#stop_p2btn").hide();
+                  }
+              }
+
+          })
+       });
+    });
+
+
+
+    $("#provide_q_btn").on('click', function () {
+        $.ajax({
+            'url':"{% url 'provide_question' %}",
+            'type':'post',
+            data:{
+                'csrfmiddlewaretoken':"{{ csrf_token }}"
+            },
+            dataType:'json',
+            success:function (data) {
+                $("#msg").html(data['msg']);
+            }
+        })
+    });
+
+    function checkForProvideQ() {
+
+        $.ajax({
+            'url':"{% url 'check_for_provide_question' %}",
+            'type':'post',
+            data:{
+                'csrfmiddlewaretoken':"{{ csrf_token }}"
+            },
+            dataType:'json',
+            success:function (data) {
+                console.log(data['msg']);
+                if(data['msg']==='true'){
+                    $("#provide_q_btn").fadeIn();
+                    $("#provide_q_btn").removeClass('disabled');
+                    $("#msg").html(data['message']);
+                } else if(data['msg']==='false'){
+                    $("#provide_q_btn").addClass('disabled');
+                    $("#msg").html('provide new question or end the phase');
+                }
+            }
+        })
+    }
+
+    tid = setInterval(checkForProvideQ, 2000);
+
+
+
+
+
+    </script>
+
+
 {% endblock script %}
+
+
 </body>
 </html>

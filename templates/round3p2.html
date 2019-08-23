@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="m-1 p-1 container" id="q-box">
+        {% if question %}
+
+            <p class="lead font-weight-bold" id="question_title">
+                {{ question.title }}
+            </p>
+            <hr>
+            <table class="table table-bordered table-dark" id="ans_table">
+                {% for o in options %}
+                    <tr>
+                        <td><input name="option" type="radio" value="{{ o.pk }}"><span
+                                                                                       class="ml-3 lead">{{ o.title }} {{ o.pk }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+            <button id="submitbtn" class="btn btn-primary badge-pill float-right">Submit</button>
+            {% else %}
+            <script>
+            location.href = "/quiz/round/" + "{{ round.pk }}" + "/score";
+            </script>
+        {% endif %}
+    </div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+    {{ block.super }}
+    <script>
+        $("#submitbtn").on('click', function(){
+            let option_pk = $('input:radio[name=option]:checked').val();
+            console.log(option_pk, "{{ round.pk }}");
+            $.ajax({
+                url: '{% url "update_score" %}',
+                type: 'post',
+                data: {
+                    'question_pk': "{{ question.pk }}",
+                    'option_pk': option_pk,
+                    'round_pk':"{{ round.pk }}",
+                    'phase': '2',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data['msg']);
+                    location.reload();
+                }
+            })
+        });
+
+    </script>
+{% endblock script %}

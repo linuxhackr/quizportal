@@ -5,17 +5,24 @@
     <meta charset="UTF-8">
     <title>The Quest</title>
     {% block stylesheet %}
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <style>
+        *{
+            font-family: "Lexend Deca";
+        }
+        </style>
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
     {% endblock stylesheet %}
 </head>
-<body class="" style="background-color: #f6f6f6">
+<body class="text-white" style="background-color: #111111">
 {% block header %}
-    <header class="p-2 bg-light border-bottom border-info shadow mb-4">
-    <a class="btn btn-light border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
-    <a class="btn btn-light border btn-sm float-right shadow" href="{% url 'rounds' %}">All Rounds</a>
+    <header class="p-2 border-bottom border-info shadow mb-4" style="background-color: #090909">
+    <a class="btn btn-dark border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
+    <a class="btn btn-dark border btn-sm float-right shadow ml-2" href="{% url 'rounds' %}">All Rounds</a>
+    <a class="font-weight-bold float-right">{{ team.name }}</a>
 <h3 class="text-info font-weight-bold">Novus</h3>
     </header>
 {% endblock header %}

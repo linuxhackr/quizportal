@@ -12,6 +12,7 @@ class Category(models.Model):
 
 class Team(models.Model):
     participants = models.ManyToManyField(User)
+    team_name = models.CharField(max_length=100)
     name = models.CharField(max_length=32, unique=True)
     password = models.CharField(max_length=20)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)

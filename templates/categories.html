@@ -5,7 +5,7 @@
 {% block content %}
     <div class="row m-0 p-3 justify-content-center" id="categories">
     {% for c in categories %}
-    <div id="{{ c.pk }}" class="col-12 col-sm-6 col-md-3 col-lg-2" style="height: 100px">
+    <div id="{{ c.pk }}" class="col-12 p-3 rounded border m-1 font-weight-bold col-sm-6 col-md-3 col-lg-2" style="height: 100px">
         <h4>{{ c.name }}</h4>
     </div>
     {% endfor %}
@@ -22,8 +22,8 @@
     let category_pk = null;
     $("#categories div").on('click', function (e) {
        category_pk = this.id;
-       $("#categories div").removeClass("shadow");
-       $(this).addClass("shadow");
+       $("#categories div").removeClass("bg-info");
+       $(this).addClass("bg-info text-white");
        $("#next").fadeOut(100);
        $("#next").fadeIn(300);
     });

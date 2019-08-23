@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from quiz.models import Question, Option, Category, Round
+from quiz.models import Question, Option, Category, Round, Phase, BzrAttempt
 from team.models import Team
 
 def admin_panel(request):
@@ -74,4 +74,22 @@ def qm(request):
     if request.user.is_superuser:
         rounds = Round.objects.all()
         teams = Team.objects.all()
-        return render(request, 'qm.html', {'rounds':rounds, 'teams':teams})
+        phase1 = Phase.objects.get(phase=1)
+        phase2 = Phase.objects.get(phase=2)
+        return render(request, 'qm.html', {'rounds':rounds, 'teams':teams, 'phase1':phase1, 'phase2':phase2})
+
+
+def live_score(request, round_pk):
+    if round_pk:
+        try:
+            round = Round.objects.get(pk=round_pk)
+        except Round.DoesNotExist:
+            round = None
+        if round is not None:
+            scores_q = round.get_scores()
+
+            return render(request, 'live_score.html', {'scores':scores_q, 'round':round})
+
+
+
+

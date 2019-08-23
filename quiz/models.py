@@ -1,5 +1,6 @@
 from django.db import models
 from team.models import Team
+import math
 from django.db.models import Q
 
 
@@ -13,42 +14,85 @@ class Round(models.Model):
     is_completed = models.BooleanField(default=False)
 
     def get_scores(self):
-        return self.score_set.all()
+        return self.score_set.all().order_by("-score", "pk")
 
 
     def fill_up_eligible_teams(self):
-        """
-        after completing the quiz
-        based on rank
-
-        take 100% in case of round 1
-        take 40 % in case of round 2
-        take top 6 teams in case of round 3
-        :return:
-        """
-
+        scores = self.score_set.all()
+        print(scores)
+        for s in scores:
+            s.set_rank()
+            print(s.rank)
+        if self.round is 1:
+            teams = Team.objects.all()
+            for t in teams:
+                self.eligible_teams.add(t)
+            self.save()
+        elif self.round is 2:
+            # todo short on the basis of rank
+            print('lets fill eligibility for 2nd round')
+            round_1_score = Round.objects.get(round=1).score_set.all().order_by('score')
+            num_eligibles = math.floor((round_1_score.count()/100)*40)
+            eligible_teams = round_1_score[:num_eligibles]
+            for e in eligible_teams:
+                self.eligible_teams.add(e.team)
+                self.save()
+        elif self.round is 3:
+            print("lets fill the eligibility for 3rd round")
+            round_2_score = Round.objects.get(round=2).score_set.all().order_by('score')
+            eligible_teams = round_2_score[:6]
+            for e in eligible_teams:
+                self.eligible_teams.add(e.team)
+                self.save()
         pass
 
     def get_question_set(self, team):
         if self.round is 1:
-            attempts = Attempt.objects.filter(team=team)
+            attempts = Attempt.objects.filter(team=team, round=self)
+            print(attempts)
             a_list = []
             for a in attempts:
                 a_list.append(a.question.pk)
             a_list = set(a_list)
-            questions = self.question_set.filter(Q(category=team.category) & ~Q(pk__in = a_list))[:40]
-
-
-            # todo shuffle it
-            print(questions)
+            num_attemts = len(a_list)
+            if(10-num_attemts) >0:
+                questions = self.question_set.filter(~Q(pk__in=a_list))[:(10-num_attemts)]
+            else:
+                questions = []
             return questions
         elif self.round == 2:
-            questions = self.question_set.all()[:30]
+            attempts = Attempt.objects.filter(team=team, round=self)
+            a_list = []
+            for a in attempts:
+                a_list.append(a.question.pk)
+            a_list = set(a_list)
+            num_attemts = len(a_list)
+            if(10-num_attemts)>0:
+                questions = self.question_set.filter(~Q(pk__in=a_list))[:(10 - num_attemts)]
+            else:
+                questions = []
             return questions
-        elif self.round == 3:
-            # return one question
-            pass
 
+        elif self.round == 3:
+            if(Phase.objects.get(phase=2).is_live):
+                attempts = Attempt.objects.filter(team=team, round=self)
+                a_list = []
+                for a in attempts:
+                    a_list.append(a.question.pk)
+                a_list = set(a_list)
+                num_attemts = len(a_list)
+
+                print(attempts)
+                if (10-num_attemts)>0:
+                    question = self.question_set.filter(~Q(pk__in=a_list))[:(10 - num_attemts)]
+                    if len(question)>0:
+                        question = question[0]
+                    else:
+                        question = None
+                else:
+                    question = None
+                return question
+            return []
 
 
     def __str__(self):
@@ -77,6 +121,7 @@ class Question(models.Model):
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     round = models.ForeignKey(Round, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='files/', blank=True, null=True)
 
     def get_options(self):
         return self.option_set.all()
@@ -86,6 +131,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title[:30]
+
+    def get_file_url(self):
+        if self.file:
+            return self.file.url
+        else:
+            return False
 
 
 class Option(models.Model):
@@ -102,6 +153,25 @@ class Attempt(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
     is_submitted = models.BooleanField(default=False)
+    round = models.ForeignKey(Round, blank=True, null=True, on_delete=models.CASCADE)
+
+
+class BzrAttempt(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
+    time = models.DateTimeField(auto_now_add=True)
+    is_submitted = models.BooleanField(default=False)
+    round = models.ForeignKey(Round, blank=True, null=True, on_delete=models.CASCADE)
+
+    def set_team(self, team):
+        if self.team is None:
+            self.team = team
+
+class Phase(models.Model):
+    phase = models.IntegerField()
+    is_live = models.BooleanField(default=False)
+
+
 
 
 """

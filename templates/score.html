@@ -3,12 +3,12 @@
     {% if score %}
     <div class="list-group m-1 p-1">
     {% if my_score %}
-    <div class="list-group-item bg-info text-white mb-1 rounded-0">
+    <div class="list-group-item list-group-item-success mb-1 rounded-0">
         {{ my_score.score }} scored by me
     </div>
         {% endif %}
     {% for s in score %}
-        <div class="list-group-item">
+        <div class="list-group-item list-group-item-info">
         {{ s.score }} by {{ s.team.name }}
         </div>
     {% endfor %}

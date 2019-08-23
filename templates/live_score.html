@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="font-weight-bold lead">LIVE SCORE FOR ROUND {{ round.round }}</h1>
+    <div class="table_box p-2 table-responsive m-auto" style="max-width: 500px">
+
+        <table id="table" class="table table-danger">
+            <tr>
+                <th>Team Name</th>
+                <th>Score</th>
+                {% for s in scores %}
+                    <tr>
+                        <td>{{ s.team.team_name }}</td>
+                        <td>{{ s.score }}</td>
+                    </tr>
+                {% endfor %}
+            </tr>
+        </table>
+
+    </div>
+{% endblock content %}
+{% block script %}
+    {{ block.super }}
+    <script>
+        function refresh_live() {
+            $(".table_box").load(location.href + " #table");
+        }
+
+        setInterval(refresh_live, 2000)
+    </script>
+{% endblock script %}

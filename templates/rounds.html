@@ -4,9 +4,10 @@
     <hr>
     You have been selected <span class="text-info">{{ team.category }}</span>
     <hr>
-    <div class="row p-2 m-0 justify-content-center">
+    <div id="rounds">
+        <div class="row p-2 m-0 justify-content-center" id="roundsdiv">
     {% for r in rounds %}
-            <div class="card col-3 p-2 m-2 shadow">
+            <div class="card bg-dark col-12 col-md-3 p-2 m-2 shadow">
             <div class="card-header">
                 Round {{ r.round }}
             </div>
@@ -17,7 +18,14 @@
                 {% if r.is_completed %}
                                         Completed <a href="{% url 'round_score' r.pk %}" class="badge badge-success badge-pill">Check Score</a>
                     {% elif r.is_live %}
-<a href="{% url 'round' r.pk %}">Go To Quiz <span class="badge badge-danger badge-pill">live</span></a>
+
+                    {% if r.round == 3 %}
+                        <a href="{% url 'round' r.pk %}?phase=1" class="p-1 border m-1">phase 1</a>
+                        <a href="{% url 'round' r.pk %}?phase=2" class="p-1 border m-1">phase 2</a>
+                        {% else %}
+                        <a href="{% url 'round' r.pk %}" class="badge-pill bg-danger text-white">Live now</a>
+                        {% endif %}
+
                 {% else %}
                     <a class="text-muted">TBD</a>
                 {% endif %}
@@ -26,4 +34,18 @@
     {% endfor %}
     </div>
 
+    </div>
+
 {% endblock content %}
+
+{% block script %}
+    {{ block.super }}
+        <script>
+    function reload_control(){
+        $("#rounds").load(location.href+ " #roundsdiv");
+        console.log('reloaded...');
+    }
+    tid2 = setInterval(reload_control, 3000);
+    </script>
+
+{% endblock script %}

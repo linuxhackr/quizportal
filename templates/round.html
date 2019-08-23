@@ -1,143 +1,342 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
-    <hr>
     {% for q in questions %}
-        <p>quesstion---> {{ q.title }}</p>
+        <p>question---> {{ q.title }}</p>
     {% endfor %}
-    <div class="m-1 p-1 shadow" id="q-box">
-        <p class="font-weight-bold">Questions for round 1</p>
-        <p class="text-danger borde shadow p-1"><span id="timer"></span> Seconds</p>
-        <p class="lead" id="question_title">Question</p>
-        <table class="table table-bordered">
+    <div class="m-1 p-1 container" id="q-box">
+        <p class="text-capitalize{% if round.round == 3 %} d-none {% endif %}">Questions for
+            round {{ round.round }}</p>
+        <p class="text-danger lead float-right p-1{% if round.round == 3 %} d-none {% endif %}"><span id="timer"></span>
+            Seconds left</p>
+        {% if round.round == 1 %}
+            <p class="lead font-weight-bold" id="question_title">
+            </p>
+        {% elif round.round == 2 %}
+            <p class="lead font-weight-bold">
+            Play video and choose option
+            </p>
+            <video id="question_title" class="container-fluid" style="width: 800px" controls>
+                <source src="">
+            </video>
+        {% else %}
+            <div class="badge-warning" id="msgbox"></div>
+            <h1 class="font-weight-bold text-danger">: <span id="question_title_r3" class="text-light"> </span>
+            </h1>
+            <hr>
+            <div class="row justify-content-center p-2 m-2">
+
+                <button id="bzrbtn" class="btn btn-danger btn-lg badge-pill">Press Buzzer</button>
+            </div>
+        {% endif %}
+        <table class="table table-bordered table-dark text-left" id="ans_table">
             <tr>
-                <td><span id="option_1"></span><input name="option" id="option_1_input" type="radio" value=""></td>
-                <td><span id="option_2"></span><input name="option" id="option_2_input" type="radio" value=""></td>
+                <td><input name="option" class="radio radio-inline" id="option_1_input" type="radio" value=""><span id="option_1" class="ml-2 lead"> option 1</span>
+                </td>
+                <td><input name="option" class="radio radio-inline" id="option_2_input" type="radio" value=""><span id="option_2" class="ml-2 lead"> option 2</span>
+                </td>
             </tr>
             <tr>
-                <td><span id="option_3"></span><input name="option" id="option_3_input" type="radio" value=""></td>
-                <td><span id="option_4"></span><input name="option" id="option_4_input" type="radio" value=""></td>
+                <td><input name="option" class="radio radio-inline" id="option_3_input" type="radio" value=""><span id="option_3" class="ml-2 lead"> option 3</span>
+                </td>
+                <td><input name="option" class="radio radio-inline" id="option_4_input" type="radio" value=""><span id="option_4" class="ml-2 lead"> option 4</span>
+                </td>
             </tr>
+
         </table>
+        {% if round.round == 3 %}
+            <button id="submitbtn" class="btn btn-primary badge-pill float-right">Submit</button>
+        {% endif %}
     </div>
+
+
+
 {% endblock content %}
 
 {% block script %}
     {{ block.super }}
-    <script>
+    {% if round.round != 3 %}
+        <script>
 
-        const round_pk = "{{ round.pk }}";
+            const round_pk = "{{ round.pk }}";
+            const round = "{{ round.round }}";
 
-        // save response | update score | update rank
-        //
-        let num_ques = 0;
-        const time_int = 5000;
-        $(document).ready(function () {
-            $.ajax({
-                url: '{% url "round" round.pk %}',
-                type: 'post',
-                data: {
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                dataType: 'json',
-                success: function (data) {
-
-                    num_ques = data['questions'].length;
-                    if (num_ques > 0) {
-
-                        function start_questions() {
-                            function q_timer() {
-
-                                $("#timer").html(x);
-                                x = x - 1;
-
-                                if (x === 0) {
-                                    option_pk = $('input:radio[name=option]:checked').val();
-                                    console.log("--->" + option_pk);
-
-                                    question_pk = data['questions'][i].pk;
-                                    console.log(question_pk + "--> " + i);
-                                    clearInterval(timerr);
-                                    submit_response(question_pk, option_pk);
-                                    console.log('timer stopped');
-                                    console.log(i + " " + num_ques);
-                                    i = i + 1;
-                                    if (i === num_ques) {
-                                        clearInterval(tiv);
-                                        $("#q-box").html("Please wait... we are fetching the scoreboard");
-                                        setTimeout(function () {
-                                            window.location = round_pk + "/score";
-                                        }, 5000);
+            // save response | update score | update rank
+            //
+            let num_ques = 0;
+            let time_int;
+            // todo change this
+            if (round === "1") {
+                time_int = 60000
+            } else if (round === "2") {
+                time_int = 60000;
+            }
+            {% comment %}if (round === "1") {
+                let time_int = 60000;
+            } else if (round === "2") {
+                let time_int = 90000;
+            }{% endcomment %}
 
 
+            $(document).ready(function () {
+                $.ajax({
+                    url: '{% url "round" round.pk %}',
+                    type: 'post',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        num_ques = data['questions'].length;
+                        if (num_ques > 0) {
+                            function start_questions() {
+                                function q_timer() {
+                                    $("#timer").html(x);
+                                    x = x - 1;
+                                    if (x === 0) {
+                                        option_pk = $('input:radio[name=option]:checked').val();
+                                        console.log("--->" + option_pk);
+
+                                        question_pk = data['questions'][i].pk;
+                                        console.log(question_pk + "--> " + i);
+                                        clearInterval(timerr);
+                                        submit_response(question_pk, option_pk);
+                                        console.log('timer stopped');
+                                        console.log(i + " " + num_ques);
+                                        i = i + 1;
+                                        if (i === num_ques) {
+                                            clearInterval(tiv);
+                                            $("#q-box").html("Please wait... we are fetching the scoreboard");
+                                            setTimeout(function () {
+                                                window.location = round_pk + "/score";
+                                            }, time_int);
+
+
+                                        }
                                     }
                                 }
+
+                                let x = Math.floor(time_int / 1000);
+                                q_timer();
+                                timerr = setInterval(q_timer, 1000);
+
+                                attempt_question(data['questions'][i].pk);
+                                $('input:radio[name=option]:checked').prop('checked', false);
+                                if (round === "1") {
+                                    $("#question_title").html(data['questions'][i].title);
+                                    $("#option_1").html(data['questions'][i]['options'][0].title);
+                                    $("#option_2").html(data['questions'][i]['options'][1].title);
+                                    $("#option_3").html(data['questions'][i]['options'][2].title);
+                                    $("#option_4").html(data['questions'][i]['options'][3].title);
+                                    $("#option_1_input").attr('value', data['questions'][i]['options'][0].pk);
+                                    $("#option_2_input").attr('value', data['questions'][i]['options'][1].pk);
+                                    $("#option_3_input").attr('value', data['questions'][i]['options'][2].pk);
+                                    $("#option_4_input").attr('value', data['questions'][i]['options'][3].pk);
+                                } else if (round === "2") {
+                                    console.log(data['questions'][i].file);
+                                    $("#question_title").html("<source src='" + data['questions'][i].file + "'></source>");
+                                    $("#question_title")[0].load();
+
+                                    $("#option_1").html('');
+                                    $("#option_2").html('');
+                                    $("#option_3").html('');
+                                    $("#option_4").html('');
+                                    setTimeout(function () {
+                                        $("#option_1").html(data['questions'][i]['options'][0].title);
+                                        $("#option_2").html(data['questions'][i]['options'][1].title);
+                                        $("#option_3").html(data['questions'][i]['options'][2].title);
+                                        $("#option_4").html(data['questions'][i]['options'][3].title);
+                                        $("#option_1_input").attr('value', data['questions'][i]['options'][0].pk);
+                                        $("#option_2_input").attr('value', data['questions'][i]['options'][1].pk);
+                                        $("#option_3_input").attr('value', data['questions'][i]['options'][2].pk);
+                                        $("#option_4_input").attr('value', data['questions'][i]['options'][3].pk);
+                                    }, 30000)
+
+                                }
+
+
+                                {#submit_response(data['questions']);#}
+
+
                             }
 
-                            let x = Math.floor(time_int / 1000);
-                            q_timer();
-                            timerr = setInterval(q_timer, 1000);
-
-                            attempt_question(data['questions'][i].pk);
-
-
-                            $('input:radio[name=option]:checked').prop('checked', false);
-                            $("#question_title").html(data['questions'][i].title);
-                            $("#option_1").html(data['questions'][i]['options'][0].title);
-                            $("#option_2").html(data['questions'][i]['options'][1].title);
-                            $("#option_3").html(data['questions'][i]['options'][2].title);
-                            $("#option_4").html(data['questions'][i]['options'][3].title);
-                            $("#option_1_input").attr('value', data['questions'][i]['options'][0].pk);
-                            $("#option_2_input").attr('value', data['questions'][i]['options'][1].pk);
-                            $("#option_3_input").attr('value', data['questions'][i]['options'][2].pk);
-                            $("#option_4_input").attr('value', data['questions'][i]['options'][3].pk);
-
-
-                            {#submit_response(data['questions']);#}
-
-
+                            let i = 0;
+                            start_questions();
+                            let tiv = setInterval(start_questions.bind(), time_int);
+                        } else {
+                            window.location.href = round_pk + '/score'
                         }
-
-                        let i = 0;
-                        start_questions();
-                        let tiv = setInterval(start_questions.bind(), time_int);
-                    } else {
-                        window.location.href = round_pk+'/score'
                     }
-                }
+                });
+
             });
 
-        });
+            function submit_response(question_pk, option_pk) {
+                console.log('trying to submit the response');
+                $.ajax({
+                    url: '{% url "update_score" %}',
+                    type: 'post',
+                    data: {
+                        'question_pk': question_pk,
+                        'option_pk': option_pk,
+                        'round_pk': round_pk,
+                        'phase':1,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data['msg']);
+                    }
+                })
+            }
 
-        function submit_response(question_pk, option_pk) {
-            $.ajax({
-                url: '{% url "update_score" %}',
-                type: 'post',
-                data: {
-                    'question_pk': question_pk,
-                    'option_pk': option_pk,
-                    'round_pk': round_pk,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data['msg']);
+            function attempt_question(question_pk) {
+                $.ajax({
+                    url: '{% url "attempt_question" %}',
+                    type: 'post',
+                    data: {
+                        'question_pk': question_pk,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data['msg']);
+                    }
+                })
+            }
+        </script>
+    {% else %}
+
+    {% endif %}
+
+    {% if round.round == 3 %}
+        <script>
+
+            $(document).ready(function () {
+                let phase = "{{ phase.phase }}";
+                console.log("phase: " + phase);
+                $("#bzrbtn").hide();
+                $("#ans_table").hide();
+                $("#submitbtn").hide();
+
+                if (phase === "1") {
+
+                    function submit_response(question_pk, option_pk) {
+                        console.log('trying to submit the response');
+                        $.ajax({
+                            url: '{% url "update_score" %}',
+                            type: 'post',
+                            data: {
+                                'question_pk': question_pk,
+                                'option_pk': option_pk,
+                        'phase':1,
+                                'round_pk': "{{ round.pk }}",
+                                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log(data['msg']);
+                            }
+                        })
+                    }
+
+                    // checking for new question phase 1
+                    function get_question_r3p1() {
+                        $.ajax({
+                            'url': "{% url 'get_ques_r3p1' %}",
+                            'type': 'post',
+                            data: {
+                                'phase_pk': "{{ phase.pk }}",
+                                'csrfmiddlewaretoken': "{{ csrf_token }}"
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                {#console.log(data['msg']);#}
+                                if (data['msg'] === 'unsubmitted') {
+                                    $("#question_title_r3").html(data['question'].title).show();
+                                    $("#option_1").html(data['question'].options[0].title);
+                                    $("#option_2").html(data['question'].options[1].title);
+                                    $("#option_3").html(data['question'].options[2].title);
+                                    $("#option_4").html(data['question'].options[3].title);
+                                    $("#option_1_input").attr('value', data['question'].options[0].pk);
+                                    $("#option_2_input").attr('value', data['question'].options[1].pk);
+                                    $("#option_3_input").attr('value', data['question'].options[2].pk);
+                                    $("#option_4_input").attr('value', data['question'].options[3].pk);
+
+                                    $("#ans_table").show();
+                                    $("#bzrbtn").hide();
+                                    $("#submitbtn").show();
+                                    $("#submitbtn").attr('value', data['question'].pk);
+
+
+                                } else if (data['msg'] === 'success') {
+                                    $("#msgbox").html('Press the buzzer if you know the answer.').show();
+                                    $("#question_title_r3").html(data['question'].title).show();
+                                    $("#bzrbtn").show();
+                                    console.log(data['question'].title);
+                                    $("#ans_table").hide();
+                                    $("#submitbtn").hide();
+
+                                } else if (data['msg'] === 'end') {
+                                    location.href = '/';
+                                } else {
+                                    $("#bzrbtn").hide();
+                                    $("#question_title_r3").hide();
+                                    $("#msgbox").html(data['msg']).show();
+                                    console.log(data['msg']);
+                                    $("#ans_table").hide();
+                                    $("#submitbtn").hide();
+                                }
+                            }
+                        });
+                    }
+
+                    setInterval(get_question_r3p1, 500);
+
+                    $("#submitbtn").on('click', function () {
+                        $(this).addClass('disabled');
+                        let question_pk = $(this).val();
+                        let option_pk = $('input:radio[name=option]:checked').val();
+                        submit_response(question_pk, option_pk);
+                    });
+
+
+                    $("#bzrbtn").on('click', function () {
+                        $.ajax({
+                            'url': "{% url 'press_bzr' %}",
+                            'type': 'post',
+                            data: {
+                                'csrfmiddlewaretoken': "{{ csrf_token }}",
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data['msg'] === 'success') {
+                                    $("#submitbtn").show();
+
+                                    $("#question_title_r3").html(data['question'].title).show();
+                                    $("#option_1").html(data['question'].options[0].title);
+                                    $("#option_2").html(data['question'].options[1].title);
+                                    $("#option_3").html(data['question'].options[2].title);
+                                    $("#option_4").html(data['question'].options[3].title);
+                                    $("#option_1_input").attr('value', data['question'].options[0].pk);
+                                    $("#option_2_input").attr('value', data['question'].options[1].pk);
+                                    $("#option_3_input").attr('value', data['question'].options[2].pk);
+                                    $("#option_4_input").attr('value', data['question'].options[3].pk);
+
+                                    $("#ans_table").show();
+                                    $("#submitbtn").attr('value', data['question'].pk);
+                                } else {
+                                    // todo display waiting for the next question
+                                }
+                            }
+                        });
+                    });
+
+                } else if (phase === "2") {
+
                 }
-            })
-        }
-        function attempt_question(question_pk) {
-            $.ajax({
-                url: '{% url "attempt_question" %}',
-                type: 'post',
-                data: {
-                    'question_pk': question_pk,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data['msg']);
-                }
-            })
-        }
-    </script>
+
+            });
+        </script>
+    {% endif %}
 {% endblock script %}
