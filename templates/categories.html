@@ -5,8 +5,9 @@
 {% block content %}
     <div class="row m-0 p-3 justify-content-center" id="categories">
     {% for c in categories %}
-    <div id="{{ c.pk }}" class="col-12 p-3 rounded border m-1 font-weight-bold col-sm-6 col-md-3 col-lg-2" style="height: 100px">
-        <h4>{{ c.name }}</h4>
+    <div id="{{ c.pk }}" class="col-12 p-3 mb-5 rounded border mx-1 font-weight-bold col-sm-6 col-md-3 col-lg-2" style="height: 300px;position:relative;background-color:#3c3f6c; ">
+    <img src="{{ c.poster.url }}" class="img-fluid">
+        <h4 class="my-3" style="position: absolute;top:100%">{{ c.name }}</h4>
     </div>
     {% endfor %}
     </div>

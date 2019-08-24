@@ -10,6 +10,7 @@ def update_score(request):
         team = request.user.team_set.first()
 
         if request.is_ajax():
+            print("ajax called")
             if request.method == "POST":
                 question_pk = request.POST.get('question_pk', None)
                 answer_pk = request.POST.get('option_pk', None)
@@ -28,11 +29,13 @@ def update_score(request):
                         if team not in round.eligible_teams.all():
                             return JsonResponse({'msg': 'not eligible'})
                     if round.is_live:
+                        print("round is live")
                         try:
                             score = Score.objects.get(team=team, round=round)
                         except:
                             score = Score(team=team, round=round)
                             score.save()
+                        print("lets update the score, " ,score.score, " for ", score.team)
                         score.update_score(question_pk, answer_pk, phase)
                         return JsonResponse({'msg': 'success'})
                     return JsonResponse({'msg': 'This round is not live now'})

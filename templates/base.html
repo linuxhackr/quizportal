@@ -5,33 +5,55 @@
     <meta charset="UTF-8">
     <title>The Quest</title>
     {% block stylesheet %}
-    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
         <style>
-        *{
-            font-family: "Lexend Deca";
-        }
+
+            .glow {
+                font-size: 40px;
+                color: #fff;
+                text-align: center;
+                -webkit-animation: glow 1s ease-in-out infinite alternate;
+                -moz-animation: glow 1s ease-in-out infinite alternate;
+                animation: glow 1s ease-in-out infinite alternate;
+            }
+
+            @-webkit-keyframes glow {
+                from {
+                    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+                }
+
+                to {
+                    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+                }
+            }
+        </style>
+
+        <style>
+            * {
+                font-family: "Lexend Deca";
+            }
         </style>
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
     {% endblock stylesheet %}
 </head>
-<body class="text-white" style="background-color: #111111">
+<body class="text-white" style="background-color: #12142d">
 {% block header %}
     <header class="p-2 border-bottom border-info shadow mb-4" style="background-color: #090909">
-    <a class="btn btn-dark border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
-    <a class="btn btn-dark border btn-sm float-right shadow ml-2" href="{% url 'rounds' %}">All Rounds</a>
-    <a class="font-weight-bold float-right">{{ team.name }}</a>
-<h3 class="text-info font-weight-bold">Novus</h3>
+        <a class="btn btn-dark border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
+        <a class="btn btn-dark border btn-sm float-right shadow ml-2" href="{% url 'rounds' %}">All Rounds</a>
+        <a class="font-weight-bold float-right">{{ team.name }}</a>
+        <h3 class="text-info font-weight-bold">Novus</h3>
     </header>
 {% endblock header %}
 {% block content %}
 {% endblock content %}
 {% block script %}
-<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>
-<script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
 {% endblock script %}
 </body>
 </html>

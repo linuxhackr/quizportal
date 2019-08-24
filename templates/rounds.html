@@ -7,12 +7,12 @@
     <div id="rounds">
         <div class="row p-2 m-0 justify-content-center" id="roundsdiv">
     {% for r in rounds %}
-            <div class="card bg-dark col-12 col-md-3 p-2 m-2 shadow">
+            <div class="card col-12 col-md-3 p-2 m-2 shadow" style="background-color: #54366d">
             <div class="card-header">
                 Round {{ r.round }}
             </div>
             <div class="card-body">
-                Brain Drain
+                <h4 class="glow">{{ r.name }}</h4>
             </div>
             <div class="card-footer font-weight-bold">
                 {% if r.is_completed %}

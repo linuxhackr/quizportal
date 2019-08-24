@@ -17,6 +17,7 @@ class Score(models.Model):
         self.save()
 
     def update_score(self, question_pk, option_pk, phase):
+        print("Updating the score")
         try:
             question = Question.objects.get(pk=question_pk)
         except Question.DoesNotExist:
@@ -31,17 +32,22 @@ class Score(models.Model):
                 category = self.team.category
                 # in case of round 1
                 if category:
-                    if question.category == category and self.round.is_live and not self.round.is_completed:
+                    if self.round.is_live and not self.round.is_completed:
                         try:
                             attempt = Attempt.objects.get(question=question, team=self.team, is_submitted=True)
                         except Attempt.DoesNotExist:
                             attempt = None
                         if attempt is None:
                             print("option", option)
+                            print("answer by", self.team)
                             if option.is_right:
                                 self.score += 20  # updating the score
                             else:
-                                self.score -= 5
+                                if self.round.round is 1:
+                                    pass
+                                else:
+                                    self.score -= 5
+                                    self.save()
                                 print('wrong answer')
                             print(self.score)
                             self.save()
