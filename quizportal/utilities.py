@@ -38,28 +38,26 @@ def reset_quiz():
         print("phase", p.phase, "reseted")
 
 
-def add_member_team(team_name, member1, member2, member3):
+def add_member_team(team_name, member1):
     m1 = None
-    m2 = None
-    m3 = None
     if member1 is not None:
         try:
             m1 = User.objects.get(username=member1)
         except User.DoesNotExist:
             m1 = User(username=member1, password='luckyme7')
             m1.save()
-    if member2 is not None:
-        try:
-            m2 = User.objects.get(username=member2)
-        except User.DoesNotExist:
-            m2 = User(username=member2, password='luckyme7')
-            m2.save()
-    if member3 is not None:
-        try:
-            m3 = User.objects.get(username=member3)
-        except User.DoesNotExist:
-            m3 = User(username=member3, password='luckyme7')
-            m3.save()
+    # if member2 is not None:
+    #     try:
+    #         m2 = User.objects.get(username=member2)
+    #     except User.DoesNotExist:
+    #         m2 = User(username=member2, password='luckyme7')
+    #         m2.save()
+    # if member3 is not None:
+    #     try:
+    #         m3 = User.objects.get(username=member3)
+    #     except User.DoesNotExist:
+    #         m3 = User(username=member3, password='luckyme7')
+    #         m3.save()
     if m1 is not None:
         try:
             team = Team.objects.get(name=m1.username)
@@ -71,12 +69,12 @@ def add_member_team(team_name, member1, member2, member3):
             if m1 != '':
                 team.participants.add(m1)
                 team.save()
-            if m2 != '':
-                team.participants.add(m2)
-                team.save()
-            if m3 != '':
-                team.participants.add(m3)
-                team.save()
+            # if m2 != '':
+            #     team.participants.add(m2)
+            #     team.save()
+            # if m3 != '':
+            #     team.participants.add(m3)
+            #     team.save()
             team.save()
             print("Team added", team)
     else:
@@ -102,4 +100,20 @@ def team_import():
             for w in a:
                 regno = w['reg.no']
                 team_name = w['Teamname']
-                add_member_team(team_name,regno, w['member1'], w['member2'])
+                add_member_team(team_name,regno)
+
+# _team_list = [
+#     {'name':'NO NAME', 'reg_no':11905526,'m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':11918128,'m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':11909575,'m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':'11704331',,'m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':'11903179','m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':11912725','m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':'11915274','m2':None,'m3': None},
+#     {'name':'NO NAME', 'reg_no':,'m2':None,'m3': None},
+#     {'NO NAME',  None, None},
+#     {'NO NAME', , None, None},
+#     {'NO NAME', ', None, None},
+#     {'NO NAME', , None, None},
+#     {'NO NAME', '11908752', None, None},
+# ]

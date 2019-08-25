@@ -24,6 +24,7 @@ def login_team(request):
             if team is not None:
                 # login with the first user which is the leader of that team
                 leader = team.participants.all().first()
+                print(team.participants.all())
                 user = leader
                 login(request, user)
                 context = {

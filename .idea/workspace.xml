@@ -10,37 +10,11 @@
       <change afterPath="$PROJECT_DIR$/media/files/v3.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/media/files/v4.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/media/files/v5.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-48-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-48-50_bUVQjta.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-51-38.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-51-38_vhGxzep.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-55-07.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-55-07_hBH4zqc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-58-04.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-58-57.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_22-58-57_hkbyOSB.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-00-58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-00-58_BTag9O1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-01-40.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-09-28.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-09-37.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/Screenshot_from_2019-08-24_23-09-43.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/sports.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/sports_YGfnznR.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/quiz/migrations/0009_round_poster.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/quizportal/static/img/sports.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/quizportal/static/novus.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/quiz/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/quiz/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizportal/static/img/sports.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/quizportal/static/img/sports.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizportal/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/quizportal/utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/team/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/qm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/qm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/round.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/round.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/rounds.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rounds.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/score.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/score.html" afterDir="false" />
     </list>
@@ -317,7 +291,7 @@
       <workItem from="1566544294683" duration="2108000" />
       <workItem from="1566549732018" duration="2299000" />
       <workItem from="1566553383052" duration="13808000" />
-      <workItem from="1566642659422" duration="21858000" />
+      <workItem from="1566642659422" duration="27274000" />
     </task>
     <task id="LOCAL-00001" summary="started with quizmaster">
       <created>1565560761713</created>
@@ -340,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566661270583</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Everything is working fine">
+      <created>1566706494791</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1566706494791</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +344,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="started with quizmaster" />
     <MESSAGE value="Everything is working good" />
-    <option name="LAST_COMMIT_MESSAGE" value="Everything is working good" />
+    <MESSAGE value="Everything is working fine" />
+    <option name="LAST_COMMIT_MESSAGE" value="Everything is working fine" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
