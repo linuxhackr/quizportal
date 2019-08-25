@@ -8,6 +8,8 @@ from django.http import JsonResponse
 def categories(request):
     if request.user.is_authenticated:
         team = request.user.team_set.first()
+        team.category = None
+        team.save()
         if team.category:
             return redirect('/quiz/rounds')
         categories = Category.objects.all()
@@ -147,7 +149,7 @@ def score(request, round_pk):
             score = round.get_scores()
             team = request.user.team_set.first()
             myscore = round.score_set.filter(team=team).first()
-            return render(request, 'score.html', {'score': score, 'my_score': myscore})
+            return render(request, 'score.html', {'team':team,'score': score, 'my_score': myscore})
     return redirect('/')
 
 

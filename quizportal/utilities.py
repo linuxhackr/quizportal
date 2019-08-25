@@ -103,5 +103,3 @@ def team_import():
                 regno = w['reg.no']
                 team_name = w['Teamname']
                 add_member_team(team_name,regno, w['member1'], w['member2'])
-
-

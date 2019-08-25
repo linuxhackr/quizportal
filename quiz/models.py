@@ -12,6 +12,7 @@ class Round(models.Model):
     is_live = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
+    poster = models.ImageField(upload_to='images/', blank=True)
 
     def get_scores(self):
         return self.score_set.all().order_by("-score", "pk")
@@ -55,9 +56,9 @@ class Round(models.Model):
             a_list = set(a_list)
             num_attemts = len(a_list)
 
-            if (10 - num_attemts) > 0:
+            if (40 - num_attemts) > 0:
                 print(team.category)
-                questions = self.question_set.filter(~Q(pk__in=a_list) & Q(category=team.category))[:(10 - num_attemts)]
+                questions = self.question_set.filter(~Q(pk__in=a_list) & Q(category=team.category))[:(40 - num_attemts)]
                 print(questions)
             else:
                 questions = []
@@ -85,8 +86,8 @@ class Round(models.Model):
                 num_attemts = len(a_list)
 
                 print(attempts)
-                if (5 - num_attemts) > 0:
-                    question = self.question_set.filter(~Q(pk__in=a_list))[:(5 - num_attemts)]
+                if (10 - num_attemts) > 0:
+                    question = self.question_set.filter(~Q(pk__in=a_list))[:(10 - num_attemts)]
                     if len(question) > 0:
                         question = question[0]
                     else:

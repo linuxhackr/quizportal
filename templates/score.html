@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if score %}
-    <div class="list-group m-1 p-1">
+    <div class="list-group m-1 p-1 m-auto" style="max-width: 500px">
     {% if my_score %}
-    <div class="list-group-item list-group-item-success mb-1 rounded-0">
+    <div class="list-group-item list-group-item-success mb-3 rounded-0">
         {{ my_score.score }} scored by me
     </div>
         {% endif %}
     {% for s in score %}
-        <div class="list-group-item list-group-item-info">
+        <div class="list-group-item list-group-item-info rounded-0">
         {{ s.score }} by {{ s.team.name }}
         </div>
     {% endfor %}

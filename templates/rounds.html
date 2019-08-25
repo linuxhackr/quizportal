@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <p>Hello, <span class="text-success">{{ team.name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>
-    <hr>
-    You have been selected <span class="text-info">{{ team.category }}</span>
-    <hr>
+{#    <p>Hello, <span class="text-success">{{ team.team_name }}</span> <a href="{% url 'team_logout' %}">logout</a></p>#}
+{#    <hr>#}
+    <h3 class="text-center">
+    You selected <span class="text-info">{{ team.category }} <a href="{% url 'categories' %}" class="btn btn-sm btn-outline-light" style="cursor: pointer">Change</a></span>
+
+    </h3>
+{#    <hr>#}
     <div id="rounds">
         <div class="row p-2 m-0 justify-content-center" id="roundsdiv">
     {% for r in rounds %}
-            <div class="card col-12 col-md-3 p-2 m-2 shadow" style="background-color: #54366d">
+            <div  class="card col-12 col-md-3 p-2 m-2 bg-dark text-light" style="box-shadow:1px 3px 3px 5px white;">
             <div class="card-header">
                 Round {{ r.round }}
             </div>
             <div class="card-body">
-                <h4 class="glow">{{ r.name }}</h4>
+{#                <img class="img-fluid d-block m-auto rounded-circle shadow-lg" src="{{ r.poster.url }}">#}
+                <h4 class="" style="text-shadow: 2px 2px 20px #111">{{ r.name }}</h4>
             </div>
             <div class="card-footer font-weight-bold">
                 {% if r.is_completed %}
@@ -20,10 +25,10 @@
                     {% elif r.is_live %}
 
                     {% if r.round == 3 %}
-                        <a href="{% url 'round' r.pk %}?phase=1" class="p-1 border m-1">phase 1</a>
-                        <a href="{% url 'round' r.pk %}?phase=2" class="p-1 border m-1">phase 2</a>
+                        <a href="{% url 'round' r.pk %}?phase=1" class="p-0 px-1 btn btn-sm btn-info my-2 m-1">phase 1</a>
+                        <a href="{% url 'round' r.pk %}?phase=2" class="p-0 px-1 btn btn-sm btn-info m-1">phase 2</a>
                         {% else %}
-                        <a href="{% url 'round' r.pk %}" class="badge-pill bg-danger text-white">Live now</a>
+                        <a href="{% url 'round' r.pk %}" class="badge-pill bg-danger text-white">Live now GO</a>
                         {% endif %}
 
                 {% else %}
@@ -33,8 +38,15 @@
             </div>
     {% endfor %}
     </div>
-
     </div>
+    <div class="row justify-content-center m-0 p-4">
+        <div class="col col-md-8 border p-3 rounded text-white">
+            <h4 class="border-bottom pb-3">>> In Round 1 40% will be selected for round 2</h4>
+
+            <h4>>> In Round 2 only 6 teams will be selected for round 3</h4>
+        </div>
+    </div>
+
 
 {% endblock content %}
 

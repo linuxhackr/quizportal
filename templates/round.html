@@ -19,6 +19,7 @@
             <video id="question_title" class="container-fluid" style="width: 800px" controls>
                 <source src="">
             </video>
+            <p class="my-3 font-weight-bold lead" id="question_text"></p>
         {% else %}
             <div class="badge-warning" id="msgbox"></div>
             <h1 class="font-weight-bold text-danger">: <span id="question_title_r3" class="text-light"> </span>
@@ -136,6 +137,7 @@
                                     console.log(data['questions'][i].file);
                                     $("#question_title").html("<source src='" + data['questions'][i].file + "'></source>");
                                     $("#question_title")[0].load();
+                                    $("#question_text").html(data['questions'][i].title);
 
                                     $("#option_1").html('');
                                     $("#option_2").html('');

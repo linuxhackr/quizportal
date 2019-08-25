@@ -41,11 +41,14 @@
 </head>
 <body class="text-white" style="background-color: #12142d">
 {% block header %}
-    <header class="p-2 border-bottom border-info shadow mb-4" style="background-color: #090909">
-        <a class="btn btn-dark border btn-sm float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
-        <a class="btn btn-dark border btn-sm float-right shadow ml-2" href="{% url 'rounds' %}">All Rounds</a>
-        <a class="font-weight-bold float-right">{{ team.name }}</a>
-        <h3 class="text-info font-weight-bold">Novus</h3>
+    <header class="p-2 border-bottom border-info  mb-4" style="background-color: #12142d;box-shadow: 2px 1px 2px 2px #e4f8ff">
+        <a class="font-weight-bold float-right mt-4 display-4 text-white" href="{% url 'rounds' %}">{{ team.team_name }} [{{ team.name }}] </a>
+        <img style="width:5%;" src="{% static 'novus.jpeg' %}">
+        <h2>The Quest</h2>
+        <a class="btn btn-danger border ml-2 mt-4 float-right shadow-sm ml-2" href="{% url 'team_logout' %}">logout</a>
+        <a class="btn btn-success border mt-4 float-right shadow ml-2" href="{% url 'rounds' %}">All Rounds</a>
+        <h3 class="text-light font-weight-bold display-4">Novus</h3>
+
     </header>
 {% endblock header %}
 {% block content %}
